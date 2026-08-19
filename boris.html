@@ -11,10 +11,18 @@
   <main class="profile-main boris-main boris-page">
     <article class="boris-intro"><img class="mini-portrait" src="assets/boris.png" alt="Boris"><h1>Hey <em>Boris!</em></h1></article>
     <section class="game-grid" aria-label="Boris's games">
-      <article class="game-card game-locked" aria-label="Game one locked"><span class="lock-icon" aria-hidden="true">✦</span></article>
-      <article class="game-card game-locked" aria-label="Game two locked"><span class="lock-icon" aria-hidden="true">✦</span></article>
-      <article class="game-card game-locked" aria-label="Game three locked"><span class="lock-icon" aria-hidden="true">✦</span></article>
+      <article class="game-card stock-card"><div class="game-number">01</div><div><p class="role">Three rounds</p><h2>Is it bullish or bearish?</h2></div><button class="game-start" id="start-stock-game" type="button">Play now <span aria-hidden="true">→</span></button></article>
+      <article class="game-card npc-card"><div class="game-number">02</div><div><p class="role">Three rounds</p><h2>Save the NPC</h2></div><button class="game-start" id="start-npc-game" type="button">Play now <span aria-hidden="true">→</span></button></article>
+      <article class="game-card slider-card"><div class="game-number">03</div><div><p class="role">Three rounds</p><h2>Market Lock</h2></div><button class="game-start" id="start-slider-game" type="button">Play now <span aria-hidden="true">→</span></button></article>
     </section>
+
+    <section class="mini-game" id="stock-game" hidden aria-labelledby="stock-title"><div class="game-toolbar"><div><p class="role" id="stock-round-label">Round 1</p><h2 id="stock-title">Sell in the green</h2></div><button class="game-close" id="close-stock-game" type="button" aria-label="Close game">×</button></div><div class="stock-stage"><div class="profit-zone">SELL ZONE</div><svg class="stock-chart" id="stock-chart" viewBox="0 0 800 300" preserveAspectRatio="none" aria-label="Live stock chart"><polyline id="stock-line" points="0,240"/></svg><div class="stock-price" id="stock-price">$100.00</div><div class="round-overlay" id="stock-overlay" aria-live="assertive"><strong id="stock-overlay-title">Round 1</strong></div></div><button class="sell-button" id="sell-stock" type="button">SELL</button><p class="game-status" id="stock-status" aria-live="polite"></p></section>
+
+    <section class="mini-game" id="npc-game" hidden aria-labelledby="npc-title"><div class="game-toolbar"><div><p class="role" id="npc-round-label">Round 1</p><h2 id="npc-title">Find the NPC</h2></div><button class="game-close" id="close-npc-game" type="button" aria-label="Close game">×</button></div><div class="npc-world" id="npc-world"><div class="boris-player" id="boris-player"><img src="assets/boris.png" alt="Boris"></div><button class="npc-person" id="npc-person" type="button" aria-label="Talk to the NPC"><span class="npc-head"></span><span class="npc-body"></span><span class="npc-alert">!</span></button><div class="round-overlay" id="npc-overlay" aria-live="assertive"><strong id="npc-overlay-title">Round 1</strong></div></div><div class="walk-controls"><button id="walk-left" type="button" aria-label="Walk left">←</button><button id="walk-right" type="button" aria-label="Walk right">→</button></div><div class="npc-question" id="npc-question" hidden><h3 id="question-text"></h3><div id="answer-options"></div></div><p class="game-status" id="npc-status" aria-live="polite">Walk to the NPC.</p></section>
+
+    <section class="mini-game" id="slider-game" hidden aria-labelledby="slider-title"><div class="game-toolbar"><div><p class="role" id="slider-round-label">Round 1</p><h2 id="slider-title">Open the lock</h2></div><button class="game-close" id="close-slider-game" type="button" aria-label="Close game">×</button></div><div class="slider-wrap"><div class="slider-board" id="slider-board" aria-label="Sliding number puzzle"></div><div class="round-overlay" id="slider-overlay" aria-live="assertive"><strong id="slider-overlay-title">Round 1</strong></div></div><p class="game-status" id="slider-status" aria-live="polite">Put the numbers in order.</p></section>
+
     <a class="back-link" href="index.html">Back to both profiles →</a>
   </main>
+  <script src="boris-game.js"></script>
 </body></html>

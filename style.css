@@ -215,9 +215,13 @@ footer { padding: 34px 0 38px; border-top: 1px solid rgba(23,38,55,.25); margin-
 .victor-intro, .boris-intro { max-width: 760px; margin: 0 auto; text-align: center; }
 .game-grid { width: min(760px, 100%); margin: 65px auto 36px; display: grid; grid-template-columns: 1fr; gap: 18px; text-align: left; }
 .game-card { min-height: 270px; padding: 25px; border: 2px solid var(--ink); border-radius: 22px; box-shadow: 6px 6px 0 var(--ink); display: flex; flex-direction: column; justify-content: space-between; }
+.game-grid .game-card { max-width: none; }
 .catch-card { background: var(--blue); }
 .donkey-card { background: var(--yellow); }
 .puzzle-card { background: #d99082; }
+.stock-card { background: var(--yellow); }
+.npc-card { background: var(--blue); }
+.slider-card { background: #d99082; }
 .game-number { align-self: flex-start; padding: 7px 10px; border: 1.5px solid var(--ink); border-radius: 100px; font: 800 11px/1 "Manrope", sans-serif; }
 .game-card h2, .pig-game h2, .unlocked-message h2 { margin: 0; font: 800 31px/1 "Manrope", sans-serif; letter-spacing: -.04em; }
 .game-start { width: 100%; padding: 14px 17px; color: var(--paper); background: var(--ink); border: 2px solid var(--ink); border-radius: 12px; font: 800 14px "DM Sans", sans-serif; cursor: pointer; }
@@ -264,6 +268,36 @@ footer { padding: 34px 0 38px; border-top: 1px solid rgba(23,38,55,.25); margin-
 .memory-tile.active { opacity: 1; filter: brightness(1.35); transform: scale(.95); box-shadow: inset 0 0 0 5px rgba(255,255,255,.6); }
 .tile-0 { background: var(--blue-deep); }.tile-1 { background: var(--yellow); }.tile-2 { background: var(--pink); }.tile-3 { background: var(--ink); }
 .victor-main > .back-link, .boris-main > .back-link { margin-top: 28px; }
+
+.stock-stage { position: relative; overflow: hidden; height: 310px; border: 2px solid var(--ink); border-radius: 16px; background: #102338; }
+.stock-chart { position: absolute; inset: 0; width: 100%; height: 100%; background-image: linear-gradient(rgba(255,255,255,.08) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.08) 1px, transparent 1px); background-size: 50px 50px; }
+.stock-chart polyline { fill: none; stroke: #71d99b; stroke-width: 6; vector-effect: non-scaling-stroke; stroke-linecap: round; stroke-linejoin: round; }
+.profit-zone { position: absolute; z-index: 1; top: 12%; left: 0; right: 0; height: 24%; display: grid; place-items: center; color: rgba(255,255,255,.7); background: rgba(83,195,125,.22); border-block: 1px dashed #71d99b; font: 800 11px "DM Sans", sans-serif; letter-spacing: .18em; }
+.stock-price { position: absolute; z-index: 2; top: 15px; right: 18px; color: #fff; font: 800 22px "Manrope", sans-serif; }
+.sell-button { width: 100%; margin-top: 12px; padding: 15px; color: var(--paper); background: #cf4e48; border: 2px solid var(--ink); border-radius: 12px; font: 800 18px "Manrope", sans-serif; cursor: pointer; }
+.sell-button:hover { filter: brightness(1.08); }
+
+.npc-world { position: relative; overflow: hidden; height: 310px; border: 2px solid var(--ink); border-radius: 16px; background: linear-gradient(#b8d6e6 0 72%, #79ad62 72%); }
+.boris-player { position: absolute; z-index: 3; left: 7%; bottom: 22px; width: 92px; height: 92px; overflow: hidden; border: 2px solid var(--ink); border-radius: 50%; background: var(--yellow); transition: left .2s ease; }
+.boris-player img { width: 145%; height: 145%; margin: -12% 0 0 -22%; object-fit: contain; }
+.npc-person { position: absolute; z-index: 2; right: 8%; bottom: 20px; width: 82px; height: 132px; padding: 0; border: 0; background: transparent; cursor: pointer; }
+.npc-head { position: absolute; top: 0; left: 21px; width: 43px; height: 43px; border: 2px solid var(--ink); border-radius: 50%; background: #b97d5b; }
+.npc-body { position: absolute; bottom: 0; left: 9px; width: 65px; height: 88px; border: 2px solid var(--ink); border-radius: 24px 24px 8px 8px; background: var(--pink); }
+.npc-alert { position: absolute; top: -28px; left: 32px; color: var(--ink); font: 800 30px "Manrope", sans-serif; animation: npc-bob .7s ease-in-out infinite alternate; }
+@keyframes npc-bob { to { transform: translateY(-6px); } }
+.walk-controls { display: flex; justify-content: center; gap: 10px; margin-top: 12px; }
+.walk-controls button { width: 76px; padding: 11px; color: var(--paper); background: var(--ink); border: 0; border-radius: 10px; font-size: 22px; cursor: pointer; }
+.npc-question { margin-top: 15px; padding: 18px; border: 2px solid var(--ink); border-radius: 14px; background: #fffdf8; }
+.npc-question h3 { margin: 0 0 14px; font: 800 19px/1.35 "Manrope", sans-serif; }
+.npc-question #answer-options { display: grid; gap: 8px; }
+.answer-button { padding: 11px 14px; text-align: left; color: var(--ink); background: var(--paper); border: 2px solid var(--ink); border-radius: 10px; font: 700 14px "DM Sans", sans-serif; cursor: pointer; }
+.answer-button:hover { background: var(--yellow); }
+
+.slider-wrap { position: relative; overflow: hidden; width: min(470px, 100%); margin: auto; border-radius: 18px; }
+.slider-board { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; padding: 10px; border: 2px solid var(--ink); border-radius: 18px; background: var(--blue); }
+.slider-tile { aspect-ratio: 1; color: var(--paper); background: var(--ink); border: 0; border-radius: 12px; font: 800 clamp(24px, 5vw, 42px) "Manrope", sans-serif; cursor: pointer; }
+.slider-tile.blank { visibility: hidden; pointer-events: none; }
+.slider-tile:not(.blank):hover { background: var(--pink); }
 
 @media (max-width: 760px) {
   .site-header p { display: none; }
