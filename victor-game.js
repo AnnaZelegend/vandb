@@ -37,6 +37,9 @@ arena.addEventListener('pointermove', (event) => {
 });
 
 arena.addEventListener('pointerdown', (event) => {
+  hand.classList.remove('tap');
+  void hand.offsetWidth;
+  hand.classList.add('tap');
   if (gamePaused) return;
   const pigBounds = pig.getBoundingClientRect();
   const pigCenterX = pigBounds.left + pigBounds.width / 2;
@@ -71,7 +74,10 @@ function movePig() {
   const padding = 45;
   const maxX = Math.max(padding, arena.clientWidth - padding);
   const maxY = Math.max(padding, arena.clientHeight - padding);
-  pig.style.left = `${padding + Math.random() * (maxX - padding)}px`;
+  const currentX = Number.parseFloat(pig.style.left) || arena.clientWidth / 2;
+  const nextX = padding + Math.random() * (maxX - padding);
+  pig.dataset.direction = nextX < currentX ? 'left' : 'right';
+  pig.style.left = `${nextX}px`;
   pig.style.top = `${padding + Math.random() * (maxY - padding)}px`;
 }
 
@@ -136,6 +142,7 @@ const donkeyLabel = document.querySelector('#donkey-level-label');
 const donkeyStatus = document.querySelector('#donkey-status');
 const donkeyOverlay = document.querySelector('#donkey-overlay');
 const donkeyOverlayTitle = document.querySelector('#donkey-overlay-title');
+const donkeyMessage = document.querySelector('#donkey-message');
 const donkeyRounds = [
   [{ icon: '🥕', food: true }, { icon: '🍎', food: true }, { icon: '🔑', food: false }, { icon: '🥬', food: true }, { icon: '🧦', food: false }],
   [{ icon: '🌽', food: true }, { icon: '🧱', food: false }, { icon: '🍐', food: true }, { icon: '📱', food: false }, { icon: '🥦', food: true }, { icon: '🧼', food: false }, { icon: '🍓', food: true }],
@@ -146,6 +153,7 @@ let edibleRemaining = 0;
 
 document.querySelector('#start-donkey-game').addEventListener('click', () => {
   donkeyRound = 0;
+  donkeyMessage.hidden = true;
   donkeyGame.hidden = false;
   donkeyGame.scrollIntoView({ behavior: 'smooth', block: 'center' });
   showGameBanner(donkeyOverlay, donkeyOverlayTitle, 'Round 1', renderDonkeyRound);
@@ -187,6 +195,8 @@ function feedDonkey(button, isFood) {
     showGameBanner(donkeyOverlay, donkeyOverlayTitle, 'Round complete!', () => {
       donkeyStatus.textContent = 'Message unlocked!';
       document.querySelector('#start-donkey-game').textContent = 'Play again →';
+      donkeyMessage.hidden = false;
+      donkeyMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
     });
     return;
   }
