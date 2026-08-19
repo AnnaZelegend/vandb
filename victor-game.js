@@ -134,6 +134,8 @@ const donkey = document.querySelector('#donkey');
 const foodGrid = document.querySelector('#food-grid');
 const donkeyLabel = document.querySelector('#donkey-level-label');
 const donkeyStatus = document.querySelector('#donkey-status');
+const donkeyOverlay = document.querySelector('#donkey-overlay');
+const donkeyOverlayTitle = document.querySelector('#donkey-overlay-title');
 const donkeyRounds = [
   [{ icon: '🥕', food: true }, { icon: '🍎', food: true }, { icon: '🔑', food: false }, { icon: '🥬', food: true }, { icon: '🧦', food: false }],
   [{ icon: '🌽', food: true }, { icon: '🧱', food: false }, { icon: '🍐', food: true }, { icon: '📱', food: false }, { icon: '🥦', food: true }, { icon: '🧼', food: false }, { icon: '🍓', food: true }],
@@ -146,7 +148,7 @@ document.querySelector('#start-donkey-game').addEventListener('click', () => {
   donkeyRound = 0;
   donkeyGame.hidden = false;
   donkeyGame.scrollIntoView({ behavior: 'smooth', block: 'center' });
-  renderDonkeyRound();
+  showGameBanner(donkeyOverlay, donkeyOverlayTitle, 'Round 1', renderDonkeyRound);
 });
 document.querySelector('#close-donkey-game').addEventListener('click', () => { donkeyGame.hidden = true; });
 
@@ -170,8 +172,10 @@ function renderDonkeyRound() {
 function feedDonkey(button, isFood) {
   if (!isFood) {
     button.classList.add('wrong');
-    donkeyStatus.textContent = 'Not edible — retrying this round.';
-    setTimeout(renderDonkeyRound, 850);
+    donkeyStatus.textContent = '';
+    showGameBanner(donkeyOverlay, donkeyOverlayTitle, 'Not edible — try again!', () => {
+      showGameBanner(donkeyOverlay, donkeyOverlayTitle, `Round ${donkeyRound + 1}`, renderDonkeyRound);
+    });
     return;
   }
   button.classList.add('fed');
@@ -180,13 +184,17 @@ function feedDonkey(button, isFood) {
   edibleRemaining -= 1;
   if (edibleRemaining > 0) return;
   if (donkeyRound === 2) {
-    donkeyStatus.textContent = 'Round 3 complete — message unlocked!';
-    document.querySelector('#start-donkey-game').textContent = 'Play again →';
+    showGameBanner(donkeyOverlay, donkeyOverlayTitle, 'Round complete!', () => {
+      donkeyStatus.textContent = 'Message unlocked!';
+      document.querySelector('#start-donkey-game').textContent = 'Play again →';
+    });
     return;
   }
-  donkeyRound += 1;
-  donkeyStatus.textContent = 'Good feeding! Next round...';
-  setTimeout(renderDonkeyRound, 800);
+  donkeyStatus.textContent = '';
+  showGameBanner(donkeyOverlay, donkeyOverlayTitle, 'Round complete!', () => {
+    donkeyRound += 1;
+    showGameBanner(donkeyOverlay, donkeyOverlayTitle, `Round ${donkeyRound + 1}`, renderDonkeyRound);
+  });
 }
 
 // Memory Meadow
@@ -194,6 +202,8 @@ const memoryGame = document.querySelector('#memory-game');
 const memoryTiles = [...document.querySelectorAll('.memory-tile')];
 const memoryLabel = document.querySelector('#memory-level-label');
 const memoryStatus = document.querySelector('#memory-status');
+const memoryOverlay = document.querySelector('#memory-overlay');
+const memoryOverlayTitle = document.querySelector('#memory-overlay-title');
 const patternLengths = [3, 5, 7];
 let memoryRound = 0;
 let memoryPattern = [];
@@ -204,7 +214,7 @@ document.querySelector('#start-memory-game').addEventListener('click', () => {
   memoryRound = 0;
   memoryGame.hidden = false;
   memoryGame.scrollIntoView({ behavior: 'smooth', block: 'center' });
-  beginMemoryRound();
+  showGameBanner(memoryOverlay, memoryOverlayTitle, 'Round 1', beginMemoryRound);
 });
 document.querySelector('#close-memory-game').addEventListener('click', () => { memoryGame.hidden = true; });
 memoryTiles.forEach((tile) => tile.addEventListener('click', () => chooseMemoryTile(Number(tile.dataset.tile))));
@@ -231,20 +241,26 @@ function chooseMemoryTile(tileIndex) {
   const position = playerPattern.length - 1;
   if (tileIndex !== memoryPattern[position]) {
     memoryLocked = true;
-    memoryStatus.textContent = 'Not quite — retrying this round.';
-    setTimeout(beginMemoryRound, 900);
+    memoryStatus.textContent = '';
+    showGameBanner(memoryOverlay, memoryOverlayTitle, 'Not quite — try again!', () => {
+      showGameBanner(memoryOverlay, memoryOverlayTitle, `Round ${memoryRound + 1}`, beginMemoryRound);
+    });
     return;
   }
   if (playerPattern.length !== memoryPattern.length) return;
   memoryLocked = true;
   if (memoryRound === 2) {
-    memoryStatus.textContent = 'Round 3 complete — message unlocked!';
-    document.querySelector('#start-memory-game').textContent = 'Play again →';
+    showGameBanner(memoryOverlay, memoryOverlayTitle, 'Round complete!', () => {
+      memoryStatus.textContent = 'Message unlocked!';
+      document.querySelector('#start-memory-game').textContent = 'Play again →';
+    });
     return;
   }
-  memoryRound += 1;
-  memoryStatus.textContent = 'Correct! Next round...';
-  setTimeout(beginMemoryRound, 900);
+  memoryStatus.textContent = '';
+  showGameBanner(memoryOverlay, memoryOverlayTitle, 'Round complete!', () => {
+    memoryRound += 1;
+    showGameBanner(memoryOverlay, memoryOverlayTitle, `Round ${memoryRound + 1}`, beginMemoryRound);
+  });
 }
 
 function flashTile(index) {
@@ -254,4 +270,13 @@ function flashTile(index) {
 
 function wait(milliseconds) {
   return new Promise((resolve) => setTimeout(resolve, milliseconds));
+}
+
+function showGameBanner(overlay, title, message, next) {
+  title.textContent = message;
+  overlay.classList.add('show');
+  setTimeout(() => {
+    overlay.classList.remove('show');
+    if (next) setTimeout(next, 220);
+  }, 1050);
 }
