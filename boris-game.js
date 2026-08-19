@@ -94,6 +94,7 @@ const npcGame = document.querySelector('#npc-game');
 const npcWorld = document.querySelector('#npc-world');
 const borisPlayer = document.querySelector('#boris-player');
 const npcPerson = document.querySelector('#npc-person');
+const npcImage = document.querySelector('#npc-image');
 const npcQuestion = document.querySelector('#npc-question');
 const questionText = document.querySelector('#question-text');
 const answerOptions = document.querySelector('#answer-options');
@@ -107,6 +108,7 @@ const npcQuestions = [
   { subject: 'Science', question: 'Which part of a cell controls its activities?', answers: ['Cell wall', 'Nucleus', 'Cytoplasm'], correct: 1 },
   { subject: 'History', question: 'Which ancient civilization developed democracy in Athens?', answers: ['Greece', 'Egypt', 'Rome'], correct: 0 }
 ];
+const npcSprites = ['assets/npc-fullbody.png', 'assets/npc-girl-fullbody.png', 'assets/npc-fullbody.png'];
 let npcRound = 0;
 let playerPosition = 7;
 
@@ -130,6 +132,7 @@ npcPerson.addEventListener('click', tryNpc);
 function beginNpcRound() {
   playerPosition = 7;
   borisPlayer.style.left = `${playerPosition}%`;
+  npcImage.src = npcSprites[npcRound];
   npcQuestion.hidden = true;
   npcLabel.textContent = `Round ${npcRound + 1} · ${npcQuestions[npcRound].subject}`;
   npcStatus.textContent = 'Walk to the NPC using the arrows.';
@@ -141,11 +144,11 @@ function walkBoris(amount) {
   borisPlayer.classList.remove('walking');
   void borisPlayer.offsetWidth;
   borisPlayer.classList.add('walking');
-  if (playerPosition >= 72) tryNpc();
+  if (playerPosition >= 56) tryNpc();
 }
 
 function tryNpc() {
-  if (playerPosition < 68) {
+  if (playerPosition < 52) {
     npcStatus.textContent = 'Move closer to the NPC.';
     return;
   }
