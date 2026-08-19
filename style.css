@@ -183,10 +183,17 @@ footer { padding: 34px 0 38px; border-top: 1px solid rgba(23,38,55,.25); margin-
 .dialog-copy { margin: 16px 0 28px; color: #5e6872; line-height: 1.5; }
 .code-dialog label { display: block; margin-bottom: 9px; font-size: 11px; font-weight: 800; letter-spacing: .13em; text-transform: uppercase; }
 .code-row { display: flex; gap: 9px; }
-.code-row input { min-width: 0; flex: 1; padding: 15px 16px; color: var(--ink); background: #fffdf8; border: 2px solid var(--ink); border-radius: 12px; font: 600 16px "DM Sans", sans-serif; outline: none; }
+.password-wrap { position: relative; min-width: 0; flex: 1; }
+.code-row input { width: 100%; min-width: 0; padding: 15px 52px 15px 16px; color: var(--ink); background: #fffdf8; border: 2px solid var(--ink); border-radius: 12px; font: 600 16px "DM Sans", sans-serif; outline: none; }
 .code-row input:focus { box-shadow: 0 0 0 3px var(--blue); }
 .code-row button { padding: 15px 20px; color: var(--paper); background: var(--ink); border: 2px solid var(--ink); border-radius: 12px; font: 800 14px "DM Sans", sans-serif; cursor: pointer; transition: transform .2s ease, background .2s ease; }
 .code-row button:hover { background: var(--pink); transform: translateY(-2px); }
+.code-row .password-toggle { position: absolute; top: 50%; right: 7px; width: 40px; height: 40px; padding: 9px; color: var(--ink); background: transparent; border: 0; border-radius: 9px; transform: translateY(-50%); }
+.code-row .password-toggle:hover { color: var(--pink); background: rgba(23,38,55,.07); transform: translateY(-50%); }
+.password-toggle svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.password-toggle .eye-closed { display: none; }
+.password-toggle[aria-pressed="true"] .eye-open { display: none; }
+.password-toggle[aria-pressed="true"] .eye-closed { display: block; }
 .code-error { min-height: 22px; margin: 9px 0 0; color: #b64338; font-size: 13px; font-weight: 700; }
 .code-row input.invalid { border-color: #b64338; animation: shake .32s ease; }
 .private-note { margin: 18px 0 0; padding-top: 17px; border-top: 1px solid rgba(23,38,55,.2); color: #737b83; font-size: 12px; }

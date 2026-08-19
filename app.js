@@ -11,6 +11,7 @@ const codeInput = document.querySelector('#profile-code');
 const profileName = document.querySelector('#profile-name');
 const errorMessage = document.querySelector('#code-error');
 const closeButton = document.querySelector('.dialog-close');
+const passwordToggle = document.querySelector('.password-toggle');
 let selectedProfile = '';
 let selectedDestination = '';
 
@@ -33,6 +34,9 @@ cards.forEach((card) => {
     selectedDestination = card.getAttribute('href');
     profileName.textContent = selectedProfile[0].toUpperCase() + selectedProfile.slice(1);
     form.reset();
+    codeInput.type = 'password';
+    passwordToggle.setAttribute('aria-pressed', 'false');
+    passwordToggle.setAttribute('aria-label', 'Show code');
     clearError();
     dialog.showModal();
     requestAnimationFrame(() => codeInput.focus());
@@ -59,6 +63,13 @@ form.addEventListener('submit', async (event) => {
 
 codeInput.addEventListener('input', clearError);
 closeButton.addEventListener('click', () => dialog.close());
+passwordToggle.addEventListener('click', () => {
+  const isVisible = codeInput.type === 'text';
+  codeInput.type = isVisible ? 'password' : 'text';
+  passwordToggle.setAttribute('aria-pressed', String(!isVisible));
+  passwordToggle.setAttribute('aria-label', isVisible ? 'Show code' : 'Hide code');
+  codeInput.focus();
+});
 dialog.addEventListener('click', (event) => {
   if (event.target === dialog) dialog.close();
 });
