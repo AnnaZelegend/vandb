@@ -137,19 +137,27 @@ function hideOverlay() {
 // Edible and Unedible
 const donkeyGame = document.querySelector('#donkey-game');
 const donkey = document.querySelector('#donkey');
-const foodGrid = document.querySelector('#food-grid');
+const donkeyStage = document.querySelector('#donkey-stage');
+const fallingItems = document.querySelector('#falling-items');
 const donkeyLabel = document.querySelector('#donkey-level-label');
 const donkeyStatus = document.querySelector('#donkey-status');
 const donkeyOverlay = document.querySelector('#donkey-overlay');
 const donkeyOverlayTitle = document.querySelector('#donkey-overlay-title');
 const donkeyMessage = document.querySelector('#donkey-message');
+const edibleItems = ['🥕', '🍎', '🥬', '🌽', '🍐', '🥦', '🍓', '🍉', '🍌'];
+const inedibleItems = ['🔑', '🧦', '🧱', '📱', '🧼', '💡', '🪥', '🧤', '🔩', '🪨'];
 const donkeyRounds = [
-  [{ icon: '🥕', food: true }, { icon: '🍎', food: true }, { icon: '🔑', food: false }, { icon: '🥬', food: true }, { icon: '🧦', food: false }],
-  [{ icon: '🌽', food: true }, { icon: '🧱', food: false }, { icon: '🍐', food: true }, { icon: '📱', food: false }, { icon: '🥦', food: true }, { icon: '🧼', food: false }, { icon: '🍓', food: true }],
-  [{ icon: '🥕', food: true }, { icon: '💡', food: false }, { icon: '🍉', food: true }, { icon: '🪥', food: false }, { icon: '🥬', food: true }, { icon: '🧤', food: false }, { icon: '🍌', food: true }, { icon: '🔩', food: false }, { icon: '🍎', food: true }, { icon: '🪨', food: false }]
+  { target: 4, spawnEvery: 900, fallSpeed: 105 },
+  { target: 6, spawnEvery: 680, fallSpeed: 145 },
+  { target: 8, spawnEvery: 490, fallSpeed: 190 }
 ];
 let donkeyRound = 0;
-let edibleRemaining = 0;
+let foodCaught = 0;
+let donkeyPlaying = false;
+let donkeyItems = [];
+let donkeySpawnTimer;
+let donkeyFrame;
+let lastDonkeyFrame = 0;
 
 document.querySelector('#start-donkey-game').addEventListener('click', () => {
   donkeyRound = 0;
@@ -158,39 +166,92 @@ document.querySelector('#start-donkey-game').addEventListener('click', () => {
   donkeyGame.scrollIntoView({ behavior: 'smooth', block: 'center' });
   showGameBanner(donkeyOverlay, donkeyOverlayTitle, 'Round 1', renderDonkeyRound);
 });
-document.querySelector('#close-donkey-game').addEventListener('click', () => { donkeyGame.hidden = true; });
+document.querySelector('#close-donkey-game').addEventListener('click', () => {
+  stopDonkeyRound();
+  donkeyGame.hidden = true;
+});
+
+donkeyStage.addEventListener('pointermove', moveDonkey);
+donkeyStage.addEventListener('pointerdown', moveDonkey);
 
 function renderDonkeyRound() {
-  foodGrid.replaceChildren();
-  donkeyLabel.textContent = `Round ${donkeyRound + 1} · Choose the food`;
-  donkeyStatus.textContent = '';
-  const items = [...donkeyRounds[donkeyRound]].sort(() => Math.random() - .5);
-  edibleRemaining = items.filter((item) => item.food).length;
-  items.forEach((item) => {
-    const button = document.createElement('button');
-    button.className = 'food-item';
-    button.type = 'button';
-    button.textContent = item.icon;
-    button.setAttribute('aria-label', `Feed donkey ${item.icon}`);
-    button.addEventListener('click', () => feedDonkey(button, item.food));
-    foodGrid.append(button);
-  });
+  stopDonkeyRound();
+  fallingItems.replaceChildren();
+  donkeyItems = [];
+  foodCaught = 0;
+  donkeyPlaying = true;
+  donkeyLabel.textContent = `Round ${donkeyRound + 1} · 0/${donkeyRounds[donkeyRound].target} food`;
+  donkeyStatus.textContent = 'Move the donkey with your pointer.';
+  donkeySpawnTimer = setInterval(spawnDonkeyItem, donkeyRounds[donkeyRound].spawnEvery);
+  spawnDonkeyItem();
+  lastDonkeyFrame = performance.now();
+  donkeyFrame = requestAnimationFrame(updateDonkeyItems);
 }
 
-function feedDonkey(button, isFood) {
+function moveDonkey(event) {
+  const bounds = donkeyStage.getBoundingClientRect();
+  const x = Math.max(44, Math.min(bounds.width - 44, event.clientX - bounds.left));
+  const y = Math.max(70, Math.min(bounds.height - 44, event.clientY - bounds.top));
+  donkey.style.left = `${x}px`;
+  donkey.style.top = `${y}px`;
+}
+
+function spawnDonkeyItem() {
+  if (!donkeyPlaying) return;
+  const isFood = Math.random() > .4;
+  const icons = isFood ? edibleItems : inedibleItems;
+  const element = document.createElement('span');
+  element.className = 'falling-item';
+  element.textContent = icons[Math.floor(Math.random() * icons.length)];
+  const item = { element, isFood, x: 35 + Math.random() * (donkeyStage.clientWidth - 70), y: -30 };
+  element.style.left = `${item.x}px`;
+  element.style.top = `${item.y}px`;
+  fallingItems.append(element);
+  donkeyItems.push(item);
+}
+
+function updateDonkeyItems(time) {
+  if (!donkeyPlaying) return;
+  const elapsed = Math.min(40, time - lastDonkeyFrame) / 1000;
+  lastDonkeyFrame = time;
+  const donkeyBounds = donkey.getBoundingClientRect();
+  const stageBounds = donkeyStage.getBoundingClientRect();
+  const donkeyX = donkeyBounds.left - stageBounds.left + donkeyBounds.width / 2;
+  const donkeyY = donkeyBounds.top - stageBounds.top + donkeyBounds.height / 2;
+
+  donkeyItems = donkeyItems.filter((item) => {
+    item.y += donkeyRounds[donkeyRound].fallSpeed * elapsed;
+    item.element.style.top = `${item.y}px`;
+    if (Math.hypot(item.x - donkeyX, item.y - donkeyY) < 55) {
+      item.element.remove();
+      catchDonkeyItem(item.isFood);
+      return false;
+    }
+    if (item.y > donkeyStage.clientHeight + 35) {
+      item.element.remove();
+      return false;
+    }
+    return true;
+  });
+  donkeyFrame = requestAnimationFrame(updateDonkeyItems);
+}
+
+function catchDonkeyItem(isFood) {
+  if (!donkeyPlaying) return;
   if (!isFood) {
-    button.classList.add('wrong');
+    stopDonkeyRound();
     donkeyStatus.textContent = '';
-    showGameBanner(donkeyOverlay, donkeyOverlayTitle, 'Not edible — try again!', () => {
+    showGameBanner(donkeyOverlay, donkeyOverlayTitle, 'Not food — try again!', () => {
       showGameBanner(donkeyOverlay, donkeyOverlayTitle, `Round ${donkeyRound + 1}`, renderDonkeyRound);
     });
     return;
   }
-  button.classList.add('fed');
   donkey.classList.add('chew');
   setTimeout(() => donkey.classList.remove('chew'), 220);
-  edibleRemaining -= 1;
-  if (edibleRemaining > 0) return;
+  foodCaught += 1;
+  donkeyLabel.textContent = `Round ${donkeyRound + 1} · ${foodCaught}/${donkeyRounds[donkeyRound].target} food`;
+  if (foodCaught < donkeyRounds[donkeyRound].target) return;
+  stopDonkeyRound();
   if (donkeyRound === 2) {
     showGameBanner(donkeyOverlay, donkeyOverlayTitle, 'Round complete!', () => {
       donkeyStatus.textContent = 'Message unlocked!';
@@ -205,6 +266,12 @@ function feedDonkey(button, isFood) {
     donkeyRound += 1;
     showGameBanner(donkeyOverlay, donkeyOverlayTitle, `Round ${donkeyRound + 1}`, renderDonkeyRound);
   });
+}
+
+function stopDonkeyRound() {
+  donkeyPlaying = false;
+  clearInterval(donkeySpawnTimer);
+  cancelAnimationFrame(donkeyFrame);
 }
 
 // Memory Meadow

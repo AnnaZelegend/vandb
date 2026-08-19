@@ -213,7 +213,7 @@ footer { padding: 34px 0 38px; border-top: 1px solid rgba(23,38,55,.25); margin-
 .victor-main { display: none; width: min(1180px, calc(100% - 48px)); margin: 0 auto; padding: 50px 0 80px; }
 .profile-unlocked .victor-main { display: block; }
 .victor-intro { max-width: 760px; margin: 0 auto; text-align: center; }
-.game-grid { width: 100%; margin: 65px 0 36px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; text-align: left; }
+.game-grid { width: min(760px, 100%); margin: 65px auto 36px; display: grid; grid-template-columns: 1fr; gap: 18px; text-align: left; }
 .game-card { min-height: 270px; padding: 25px; border: 2px solid var(--ink); border-radius: 22px; box-shadow: 6px 6px 0 var(--ink); display: flex; flex-direction: column; justify-content: space-between; }
 .catch-card { background: var(--blue); }
 .donkey-card { background: var(--yellow); }
@@ -252,15 +252,12 @@ footer { padding: 34px 0 38px; border-top: 1px solid rgba(23,38,55,.25); margin-
 .game-status { min-height: 25px; margin: 13px 2px 0 !important; font-size: 14px !important; font-weight: 700; }
 .unlocked-message { margin: 35px auto; padding: 30px; color: var(--ink); background: var(--yellow); border: 2px solid var(--ink); border-radius: 20px; box-shadow: 6px 6px 0 var(--ink); text-align: center; }
 .unlocked-message p:last-child { max-width: 780px; margin: 8px auto 0; color: var(--ink); }
-.donkey-stage { position: relative; overflow: hidden; padding: 24px; text-align: center; border: 2px solid var(--ink); border-radius: 16px; background: #cbe0a8; }
-.donkey { font-size: 82px; line-height: 1; transition: transform .2s ease; }
-.donkey.chew { transform: rotate(-7deg) scale(1.12); }
-.donkey-stage > p { margin: 9px 0 18px; font-weight: 700; }
-.food-grid { max-width: 720px; margin: auto; display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
-.food-item { min-height: 78px; padding: 8px; color: var(--ink); background: #fffdf8; border: 2px solid var(--ink); border-radius: 13px; font-size: 34px; cursor: pointer; transition: transform .18s ease, opacity .18s ease; }
-.food-item:hover { transform: translateY(-4px) rotate(2deg); }
-.food-item.fed { opacity: .2; transform: scale(.75); pointer-events: none; }
-.food-item.wrong { background: #ef9b91; animation: shake .32s ease; }
+.donkey-stage { position: relative; overflow: hidden; height: 390px; padding: 0; text-align: center; border: 2px solid var(--ink); border-radius: 16px; background: linear-gradient(#b9dca5 0 77%, #83b45f 77%); cursor: none; touch-action: none; }
+.donkey { position: absolute; z-index: 4; left: 50%; top: 76%; width: 88px; height: 88px; display: grid; place-items: center; font-size: 72px; line-height: 1; pointer-events: none; transform: translate(-50%, -50%); transition: transform .12s ease; filter: drop-shadow(3px 5px 0 rgba(23,38,55,.18)); }
+.donkey.chew { transform: translate(-50%, -50%) rotate(-7deg) scale(1.12); }
+.donkey-stage > p { position: relative; z-index: 3; display: inline-block; margin: 12px auto; padding: 7px 12px; color: var(--ink); background: rgba(255,253,248,.88); border-radius: 100px; font-size: 13px; font-weight: 700; }
+.falling-items { position: absolute; inset: 0; pointer-events: none; }
+.falling-item { position: absolute; z-index: 2; width: 54px; height: 54px; display: grid; place-items: center; border: 2px solid var(--ink); border-radius: 50%; background: #fffdf8; font-size: 31px; transform: translate(-50%, -50%); filter: drop-shadow(2px 3px 0 rgba(23,38,55,.18)); }
 .memory-board { position: relative; overflow: hidden; width: min(520px, 100%); margin: 8px auto; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; border-radius: 18px; }
 .memory-tile { aspect-ratio: 1.45; border: 2px solid var(--ink); border-radius: 18px; opacity: .72; cursor: pointer; transition: transform .12s ease, filter .12s ease, opacity .12s ease; }
 .memory-tile:disabled { cursor: default; }
@@ -277,7 +274,7 @@ footer { padding: 34px 0 38px; border-top: 1px solid rgba(23,38,55,.25); margin-
   .portrait { max-height: 385px; }
   .game-grid { grid-template-columns: 1fr; }
   .game-card { min-height: 210px; }
-  .food-grid { grid-template-columns: repeat(3, 1fr); }
+  .donkey-stage { height: 350px; }
 }
 
 @media (max-width: 430px) {
