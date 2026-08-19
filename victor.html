@@ -48,7 +48,7 @@
 
     <section class="mini-game donkey-game" id="donkey-game" hidden aria-labelledby="donkey-game-title">
       <div class="game-toolbar"><div><p class="role" id="donkey-level-label">Round 1</p><h2 id="donkey-game-title">Feed the donkey</h2></div><button class="game-close" id="close-donkey-game" type="button" aria-label="Close game">×</button></div>
-      <div class="donkey-stage"><div class="donkey" id="donkey" aria-hidden="true">🫏</div><p id="donkey-prompt">Choose only the food.</p><div class="food-grid" id="food-grid"></div></div>
+      <div class="donkey-stage"><div class="donkey" id="donkey" aria-hidden="true">🫏</div><p id="donkey-prompt">Choose only the food.</p><div class="food-grid" id="food-grid"></div><div class="round-overlay" id="donkey-overlay" aria-live="assertive"><strong id="donkey-overlay-title">Round 1</strong></div></div>
       <p class="game-status" id="donkey-status" aria-live="polite"></p>
     </section>
 
@@ -56,6 +56,7 @@
       <div class="game-toolbar"><div><p class="role" id="memory-level-label">Round 1</p><h2 id="memory-game-title">Repeat the pattern</h2></div><button class="game-close" id="close-memory-game" type="button" aria-label="Close game">×</button></div>
       <div class="memory-board" id="memory-board" aria-label="Memory puzzle">
         <button class="memory-tile tile-0" data-tile="0" type="button" aria-label="Blue tile"></button><button class="memory-tile tile-1" data-tile="1" type="button" aria-label="Yellow tile"></button><button class="memory-tile tile-2" data-tile="2" type="button" aria-label="Pink tile"></button><button class="memory-tile tile-3" data-tile="3" type="button" aria-label="Navy tile"></button>
+        <div class="round-overlay" id="memory-overlay" aria-live="assertive"><strong id="memory-overlay-title">Round 1</strong></div>
       </div>
       <p class="game-status" id="memory-status" aria-live="polite">Watch the pattern.</p>
     </section>

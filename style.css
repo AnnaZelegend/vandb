@@ -246,7 +246,7 @@ footer { padding: 34px 0 38px; border-top: 1px solid rgba(23,38,55,.25); margin-
 .game-status { min-height: 25px; margin: 13px 2px 0 !important; font-size: 14px !important; font-weight: 700; }
 .unlocked-message { margin: 35px auto; padding: 30px; color: var(--ink); background: var(--yellow); border: 2px solid var(--ink); border-radius: 20px; box-shadow: 6px 6px 0 var(--ink); text-align: center; }
 .unlocked-message p:last-child { max-width: 780px; margin: 8px auto 0; color: var(--ink); }
-.donkey-stage { padding: 24px; text-align: center; border: 2px solid var(--ink); border-radius: 16px; background: #cbe0a8; }
+.donkey-stage { position: relative; overflow: hidden; padding: 24px; text-align: center; border: 2px solid var(--ink); border-radius: 16px; background: #cbe0a8; }
 .donkey { font-size: 82px; line-height: 1; transition: transform .2s ease; }
 .donkey.chew { transform: rotate(-7deg) scale(1.12); }
 .donkey-stage > p { margin: 9px 0 18px; font-weight: 700; }
@@ -255,7 +255,7 @@ footer { padding: 34px 0 38px; border-top: 1px solid rgba(23,38,55,.25); margin-
 .food-item:hover { transform: translateY(-4px) rotate(2deg); }
 .food-item.fed { opacity: .2; transform: scale(.75); pointer-events: none; }
 .food-item.wrong { background: #ef9b91; animation: shake .32s ease; }
-.memory-board { width: min(520px, 100%); margin: 8px auto; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.memory-board { position: relative; overflow: hidden; width: min(520px, 100%); margin: 8px auto; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; border-radius: 18px; }
 .memory-tile { aspect-ratio: 1.45; border: 2px solid var(--ink); border-radius: 18px; opacity: .72; cursor: pointer; transition: transform .12s ease, filter .12s ease, opacity .12s ease; }
 .memory-tile:disabled { cursor: default; }
 .memory-tile.active { opacity: 1; filter: brightness(1.35); transform: scale(.95); box-shadow: inset 0 0 0 5px rgba(255,255,255,.6); }
