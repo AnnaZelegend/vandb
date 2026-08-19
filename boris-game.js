@@ -138,6 +138,9 @@ function beginNpcRound() {
 function walkBoris(amount) {
   playerPosition = Math.max(2, Math.min(82, playerPosition + amount));
   borisPlayer.style.left = `${playerPosition}%`;
+  borisPlayer.classList.remove('walking');
+  void borisPlayer.offsetWidth;
+  borisPlayer.classList.add('walking');
   if (playerPosition >= 72) tryNpc();
 }
 
