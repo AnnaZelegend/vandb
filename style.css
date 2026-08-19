@@ -216,6 +216,8 @@ footer { padding: 34px 0 38px; border-top: 1px solid rgba(23,38,55,.25); margin-
 .game-grid { width: 100%; margin: 65px 0 36px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; text-align: left; }
 .game-card { min-height: 270px; padding: 25px; border: 2px solid var(--ink); border-radius: 22px; box-shadow: 6px 6px 0 var(--ink); display: flex; flex-direction: column; justify-content: space-between; }
 .catch-card { background: var(--blue); }
+.donkey-card { background: var(--yellow); }
+.puzzle-card { background: #d99082; }
 .game-number { align-self: flex-start; padding: 7px 10px; border: 1.5px solid var(--ink); border-radius: 100px; font: 800 11px/1 "Manrope", sans-serif; }
 .game-card h2, .pig-game h2, .unlocked-message h2 { margin: 0; font: 800 31px/1 "Manrope", sans-serif; letter-spacing: -.04em; }
 .game-start { width: 100%; padding: 14px 17px; color: var(--paper); background: var(--ink); border: 2px solid var(--ink); border-radius: 12px; font: 800 14px "DM Sans", sans-serif; cursor: pointer; }
@@ -223,7 +225,7 @@ footer { padding: 34px 0 38px; border-top: 1px solid rgba(23,38,55,.25); margin-
 .game-locked { align-items: center; justify-content: center; background: rgba(23,38,55,.05); border-style: dashed; box-shadow: none; }
 .lock-icon { width: 48px; height: 48px; display: grid; place-items: center; color: var(--paper); background: #9aa0a5; border: 2px solid var(--ink); border-radius: 50%; }
 
-.pig-game { width: 100%; margin: 35px auto; padding: 24px; text-align: left; background: #fffdf8; border: 2px solid var(--ink); border-radius: 24px; box-shadow: 7px 7px 0 var(--ink); }
+.pig-game, .mini-game { width: 100%; margin: 35px auto; padding: 24px; text-align: left; background: #fffdf8; border: 2px solid var(--ink); border-radius: 24px; box-shadow: 7px 7px 0 var(--ink); }
 .game-toolbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
 .game-close { width: 42px; height: 42px; color: var(--ink); background: transparent; border: 2px solid var(--ink); border-radius: 50%; font-size: 25px; cursor: pointer; }
 .game-arena { position: relative; width: 100%; height: 230px; overflow: hidden; cursor: none; border: 2px solid var(--ink); border-radius: 16px; background: #91bf67; transition: height .4s ease, background .4s ease; }
@@ -240,6 +242,21 @@ footer { padding: 34px 0 38px; border-top: 1px solid rgba(23,38,55,.25); margin-
 .player-hand { position: absolute; z-index: 4; left: 50%; top: 70%; font-size: 46px; pointer-events: none; transform: translate(-18%, -10%) rotate(-18deg); filter: drop-shadow(3px 4px 0 rgba(23,38,55,.25)); }
 .game-status { min-height: 25px; margin: 13px 2px 0 !important; font-size: 14px !important; font-weight: 700; }
 .unlocked-message { margin: 35px auto; padding: 30px; color: var(--ink); background: var(--yellow); border: 2px solid var(--ink); border-radius: 20px; box-shadow: 6px 6px 0 var(--ink); text-align: center; }
+.unlocked-message p:last-child { max-width: 780px; margin: 8px auto 0; color: var(--ink); }
+.donkey-stage { padding: 24px; text-align: center; border: 2px solid var(--ink); border-radius: 16px; background: #cbe0a8; }
+.donkey { font-size: 82px; line-height: 1; transition: transform .2s ease; }
+.donkey.chew { transform: rotate(-7deg) scale(1.12); }
+.donkey-stage > p { margin: 9px 0 18px; font-weight: 700; }
+.food-grid { max-width: 720px; margin: auto; display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
+.food-item { min-height: 78px; padding: 8px; color: var(--ink); background: #fffdf8; border: 2px solid var(--ink); border-radius: 13px; font-size: 34px; cursor: pointer; transition: transform .18s ease, opacity .18s ease; }
+.food-item:hover { transform: translateY(-4px) rotate(2deg); }
+.food-item.fed { opacity: .2; transform: scale(.75); pointer-events: none; }
+.food-item.wrong { background: #ef9b91; animation: shake .32s ease; }
+.memory-board { width: min(520px, 100%); margin: 8px auto; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.memory-tile { aspect-ratio: 1.45; border: 2px solid var(--ink); border-radius: 18px; opacity: .72; cursor: pointer; transition: transform .12s ease, filter .12s ease, opacity .12s ease; }
+.memory-tile:disabled { cursor: default; }
+.memory-tile.active { opacity: 1; filter: brightness(1.35); transform: scale(.95); box-shadow: inset 0 0 0 5px rgba(255,255,255,.6); }
+.tile-0 { background: var(--blue-deep); }.tile-1 { background: var(--yellow); }.tile-2 { background: var(--pink); }.tile-3 { background: var(--ink); }
 .victor-main > .back-link { margin-top: 28px; }
 
 @media (max-width: 760px) {
@@ -251,6 +268,7 @@ footer { padding: 34px 0 38px; border-top: 1px solid rgba(23,38,55,.25); margin-
   .portrait { max-height: 385px; }
   .game-grid { grid-template-columns: 1fr; }
   .game-card { min-height: 210px; }
+  .food-grid { grid-template-columns: repeat(3, 1fr); }
 }
 
 @media (max-width: 430px) {
