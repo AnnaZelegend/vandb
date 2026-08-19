@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Choose Victor or Boris to enter their story.">
+  <title>Victor & Boris — Choose a profile</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="grain" aria-hidden="true"></div>
+  <header class="site-header">
+    <a class="monogram" href="index.html" aria-label="Victor and Boris home">V<span>&</span>B</a>
+  </header>
+
+  <main>
+    <section class="hero" aria-labelledby="page-title">
+      <h1 id="page-title">Secret Messages<br>for <em>V &amp; B</em></h1>
+      <p class="intro">Choose your profile, then enter the private code<br>I gave you to unwrap your birthday world.</p>
+    </section>
+
+    <section class="profiles" aria-label="Choose a profile">
+      <a class="profile-card victor" href="victor.html" data-profile="victor" aria-label="Unlock Victor's birthday world">
+        <div class="portrait-wrap">
+          <span class="orbit orbit-one" aria-hidden="true"></span>
+          <span class="orbit orbit-two" aria-hidden="true"></span>
+          <img class="portrait" src="assets/victor.png" alt="Illustration of Victor, a blue-eyed teen with wavy dirty-blond hair, pointing to a tiny running piglet">
+        </div>
+        <div class="card-copy">
+          <div>
+            <p class="role">Mr. Poark's secret pen</p>
+            <h2>Victor</h2>
+          </div>
+          <span class="arrow" aria-hidden="true">↗</span>
+        </div>
+      </a>
+
+      <a class="profile-card boris" href="boris.html" data-profile="boris" aria-label="Unlock Boris's birthday world">
+        <div class="portrait-wrap">
+          <span class="ticker ticker-one" aria-hidden="true"></span>
+          <span class="ticker ticker-two" aria-hidden="true"></span>
+          <span class="ticker ticker-three" aria-hidden="true"></span>
+          <img class="portrait" src="assets/boris.png" alt="Illustration of Boris, a blue-eyed teen with curly dirty-blond hair, pointing to a laptop with stocks">
+        </div>
+        <div class="card-copy">
+          <div>
+            <p class="role">Bobby bobiscle's secret stock market</p>
+            <h2>Boris</h2>
+          </div>
+          <span class="arrow" aria-hidden="true">↗</span>
+        </div>
+      </a>
+    </section>
+  </main>
+
+  <dialog class="code-dialog" id="code-dialog" aria-labelledby="dialog-title">
+    <button class="dialog-close" type="button" aria-label="Close code entry">×</button>
+    <div class="lock-mark" aria-hidden="true">✦</div>
+    <p class="eyebrow">Private birthday entrance</p>
+    <h2 id="dialog-title">Welcome, <span id="profile-name">Victor</span>.</h2>
+    <p class="dialog-copy">Enter the code you were given to unlock your world.</p>
+    <form id="code-form" novalidate>
+      <label for="profile-code">Your secret code</label>
+      <div class="code-row">
+        <input id="profile-code" name="code" type="password" inputmode="text" autocomplete="off" spellcheck="false" placeholder="Enter code" required>
+        <button type="submit">Unlock <span aria-hidden="true">→</span></button>
+      </div>
+      <p class="code-error" id="code-error" role="alert" aria-live="polite"></p>
+    </form>
+    <p class="private-note">This doorway only opens with your personal code.</p>
+  </dialog>
+
+  <footer><span>Made for Victor & Boris</span><span>Happy birthday · 2026</span></footer>
+  <script src="app.js"></script>
+</body>
+</html>
