@@ -15,6 +15,7 @@ const stockStatus = document.querySelector('#stock-status');
 const stockLabel = document.querySelector('#stock-round-label');
 const stockOverlay = document.querySelector('#stock-overlay');
 const stockOverlayTitle = document.querySelector('#stock-overlay-title');
+const stockMessage = document.querySelector('#stock-message');
 const stockSpeeds = [150, 105, 72];
 let stockRound = 0;
 let stockPoints = [];
@@ -24,6 +25,7 @@ let stockPlaying = false;
 
 document.querySelector('#start-stock-game').addEventListener('click', () => {
   stockRound = 0;
+  stockMessage.hidden = true;
   stockGame.hidden = false;
   stockGame.scrollIntoView({ behavior: 'smooth', block: 'center' });
   showBorisBanner(stockOverlay, stockOverlayTitle, 'Round 1', beginStockRound);
@@ -75,6 +77,8 @@ function advanceStockRound() {
   if (stockRound === 2) {
     stockStatus.textContent = 'Message unlocked!';
     document.querySelector('#start-stock-game').textContent = 'Play again →';
+    stockMessage.hidden = false;
+    stockMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
     return;
   }
   stockRound += 1;
@@ -98,6 +102,7 @@ const npcStatus = document.querySelector('#npc-status');
 const npcLabel = document.querySelector('#npc-round-label');
 const npcOverlay = document.querySelector('#npc-overlay');
 const npcOverlayTitle = document.querySelector('#npc-overlay-title');
+const npcMessage = document.querySelector('#npc-message');
 const npcQuestions = [
   { subject: 'Math', question: 'Solve: 3x + 5 = 20. What is x?', answers: ['3', '5', '8'], correct: 1 },
   { subject: 'Science', question: 'Which part of a cell controls its activities?', answers: ['Cell wall', 'Nucleus', 'Cytoplasm'], correct: 1 },
@@ -108,6 +113,7 @@ let playerPosition = 7;
 
 document.querySelector('#start-npc-game').addEventListener('click', () => {
   npcRound = 0;
+  npcMessage.hidden = true;
   npcGame.hidden = false;
   npcGame.scrollIntoView({ behavior: 'smooth', block: 'center' });
   showBorisBanner(npcOverlay, npcOverlayTitle, 'Round 1', beginNpcRound);
@@ -167,6 +173,8 @@ function answerNpc(answerIndex) {
     if (npcRound === 2) {
       npcStatus.textContent = 'Message unlocked!';
       document.querySelector('#start-npc-game').textContent = 'Play again →';
+      npcMessage.hidden = false;
+      npcMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
       return;
     }
     npcRound += 1;
@@ -181,12 +189,14 @@ const sliderStatus = document.querySelector('#slider-status');
 const sliderLabel = document.querySelector('#slider-round-label');
 const sliderOverlay = document.querySelector('#slider-overlay');
 const sliderOverlayTitle = document.querySelector('#slider-overlay-title');
+const sliderMessage = document.querySelector('#slider-message');
 const sliderScrambles = [6, 12, 22];
 let sliderRound = 0;
 let tiles = [];
 
 document.querySelector('#start-slider-game').addEventListener('click', () => {
   sliderRound = 0;
+  sliderMessage.hidden = true;
   sliderGame.hidden = false;
   sliderGame.scrollIntoView({ behavior: 'smooth', block: 'center' });
   showBorisBanner(sliderOverlay, sliderOverlayTitle, 'Round 1', beginSliderRound);
@@ -230,6 +240,8 @@ function moveSliderTile(index) {
     if (sliderRound === 2) {
       sliderStatus.textContent = 'Message unlocked!';
       document.querySelector('#start-slider-game').textContent = 'Play again →';
+      sliderMessage.hidden = false;
+      sliderMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
       return;
     }
     sliderRound += 1;
