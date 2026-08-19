@@ -214,6 +214,7 @@ const memoryLabel = document.querySelector('#memory-level-label');
 const memoryStatus = document.querySelector('#memory-status');
 const memoryOverlay = document.querySelector('#memory-overlay');
 const memoryOverlayTitle = document.querySelector('#memory-overlay-title');
+const memoryMessage = document.querySelector('#memory-message');
 const patternLengths = [3, 5, 7];
 let memoryRound = 0;
 let memoryPattern = [];
@@ -222,6 +223,7 @@ let memoryLocked = true;
 
 document.querySelector('#start-memory-game').addEventListener('click', () => {
   memoryRound = 0;
+  memoryMessage.hidden = true;
   memoryGame.hidden = false;
   memoryGame.scrollIntoView({ behavior: 'smooth', block: 'center' });
   showGameBanner(memoryOverlay, memoryOverlayTitle, 'Round 1', beginMemoryRound);
@@ -263,6 +265,8 @@ function chooseMemoryTile(tileIndex) {
     showGameBanner(memoryOverlay, memoryOverlayTitle, 'Round complete!', () => {
       memoryStatus.textContent = 'Message unlocked!';
       document.querySelector('#start-memory-game').textContent = 'Play again →';
+      memoryMessage.hidden = false;
+      memoryMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
     });
     return;
   }
