@@ -235,11 +235,14 @@ footer { padding: 34px 0 38px; border-top: 1px solid rgba(23,38,55,.25); margin-
 .level-1 .arena-scenery { border: 13px solid #9b6842; border-top-width: 5px; }
 .level-2 .arena-scenery { background: radial-gradient(circle at 18% 18%, #f4dc63 0 3px, transparent 4px), radial-gradient(circle at 74% 68%, #f4dc63 0 3px, transparent 4px); background-size: 70px 65px, 90px 80px; }
 .level-3 .arena-scenery { background: linear-gradient(160deg, transparent 65%, rgba(74,130,58,.5) 66%), radial-gradient(ellipse at 80% 15%, #d8eaaa 0 5%, transparent 6%); }
-.running-pig { position: absolute; z-index: 2; left: 50%; top: 50%; width: 62px; height: 62px; padding: 0; display: grid; place-items: center; border: 2px solid var(--ink); border-radius: 50%; background: #f8b2af; font-size: 36px; cursor: none; transform: translate(-50%, -50%); transition: left .55s cubic-bezier(.3,.8,.4,1), top .55s cubic-bezier(.3,.8,.4,1), transform .15s ease; }
+.running-pig { position: absolute; z-index: 2; left: 50%; top: 50%; width: 76px; height: 76px; padding: 0; display: grid; place-items: center; border: 2px solid var(--ink); border-radius: 50%; background: #f8b2af; font-size: 42px; cursor: none; transform: translate(-50%, -50%); transition: left .55s cubic-bezier(.3,.8,.4,1), top .55s cubic-bezier(.3,.8,.4,1), transform .15s ease; touch-action: manipulation; }
 .level-2 .running-pig { transition-duration: .4s, .4s, .15s; }
 .level-3 .running-pig { transition-duration: .27s, .27s, .15s; }
 .running-pig:hover { transform: translate(-50%, -50%) scale(1.12); }
 .player-hand { position: absolute; z-index: 4; left: 50%; top: 70%; font-size: 46px; pointer-events: none; transform: translate(-18%, -10%) rotate(-18deg); filter: drop-shadow(3px 4px 0 rgba(23,38,55,.25)); }
+.round-overlay { position: absolute; z-index: 6; inset: 0; display: grid; place-items: center; color: var(--paper); background: rgba(23,38,55,.83); opacity: 0; visibility: hidden; pointer-events: none; transition: opacity .2s ease, visibility .2s ease; }
+.round-overlay.show { opacity: 1; visibility: visible; }
+.round-overlay strong { padding: 12px 20px; text-align: center; font: 800 clamp(32px, 6vw, 64px)/1 "Manrope", sans-serif; letter-spacing: -.05em; }
 .game-status { min-height: 25px; margin: 13px 2px 0 !important; font-size: 14px !important; font-weight: 700; }
 .unlocked-message { margin: 35px auto; padding: 30px; color: var(--ink); background: var(--yellow); border: 2px solid var(--ink); border-radius: 20px; box-shadow: 6px 6px 0 var(--ink); text-align: center; }
 .unlocked-message p:last-child { max-width: 780px; margin: 8px auto 0; color: var(--ink); }

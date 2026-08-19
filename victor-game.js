@@ -7,6 +7,8 @@ const hand = document.querySelector('#player-hand');
 const levelLabel = document.querySelector('#level-label');
 const gameStatus = document.querySelector('#game-status');
 const unlockedMessage = document.querySelector('#victor-message');
+const roundOverlay = document.querySelector('#round-overlay');
+const roundOverlayTitle = document.querySelector('#round-overlay-title');
 
 const levels = [
   { name: 'The pen', speed: 900 },
@@ -16,10 +18,17 @@ const levels = [
 
 let level = 0;
 let pigTimer;
+let bannerTimer;
+let transitionTimer;
+let gamePaused = true;
 
 startButton.addEventListener('click', startGame);
 closeGameButton.addEventListener('click', stopGame);
-pig.addEventListener('click', catchPig);
+pig.addEventListener('pointerdown', (event) => {
+  event.preventDefault();
+  event.stopPropagation();
+  catchPig();
+});
 
 arena.addEventListener('pointermove', (event) => {
   const bounds = arena.getBoundingClientRect();
@@ -27,16 +36,30 @@ arena.addEventListener('pointermove', (event) => {
   hand.style.top = `${event.clientY - bounds.top}px`;
 });
 
+arena.addEventListener('pointerdown', (event) => {
+  if (gamePaused) return;
+  const pigBounds = pig.getBoundingClientRect();
+  const pigCenterX = pigBounds.left + pigBounds.width / 2;
+  const pigCenterY = pigBounds.top + pigBounds.height / 2;
+  const distance = Math.hypot(event.clientX - pigCenterX, event.clientY - pigCenterY);
+  if (distance <= 62) catchPig();
+});
+
 function startGame() {
+  clearTimeout(bannerTimer);
+  clearTimeout(transitionTimer);
   level = 0;
   unlockedMessage.hidden = true;
   game.hidden = false;
   game.scrollIntoView({ behavior: 'smooth', block: 'center' });
-  beginLevel();
+  showRoundBanner();
 }
 
 function beginLevel() {
   clearInterval(pigTimer);
+  gamePaused = false;
+  pig.disabled = false;
+  pig.style.transform = '';
   arena.className = `game-arena level-${level + 1}`;
   levelLabel.textContent = `Level ${level + 1} · ${levels[level].name}`;
   gameStatus.textContent = 'Move your hand and click the pig.';
@@ -53,28 +76,56 @@ function movePig() {
 }
 
 function catchPig() {
+  if (gamePaused) return;
+  gamePaused = true;
+  pig.disabled = true;
   clearInterval(pigTimer);
   pig.style.transform = 'translate(-50%, -50%) scale(.78)';
+  showOverlay('You caught that pig!');
 
   if (level === levels.length - 1) {
-    gameStatus.textContent = 'You caught him — all three levels complete!';
-    startButton.textContent = 'Play again →';
-    unlockedMessage.hidden = false;
-    setTimeout(() => unlockedMessage.scrollIntoView({ behavior: 'smooth', block: 'center' }), 500);
+    transitionTimer = setTimeout(() => {
+      hideOverlay();
+      gameStatus.textContent = 'All three levels complete!';
+      startButton.textContent = 'Play again →';
+      unlockedMessage.hidden = false;
+      unlockedMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 1300);
     return;
   }
 
-  gameStatus.textContent = `Caught! Level ${level + 2} is faster.`;
-  level += 1;
-  setTimeout(() => {
-    pig.style.transform = '';
-    beginLevel();
-  }, 850);
+  transitionTimer = setTimeout(() => {
+    level += 1;
+    showRoundBanner();
+  }, 1300);
 }
 
 function stopGame() {
   clearInterval(pigTimer);
+  clearTimeout(bannerTimer);
+  clearTimeout(transitionTimer);
+  gamePaused = true;
+  hideOverlay();
   game.hidden = true;
+}
+
+function showRoundBanner() {
+  arena.className = `game-arena level-${level + 1}`;
+  levelLabel.textContent = `Level ${level + 1} · ${levels[level].name}`;
+  showOverlay(`Round ${level + 1}`);
+  bannerTimer = setTimeout(() => {
+    hideOverlay();
+    beginLevel();
+  }, 1050);
+}
+
+function showOverlay(message) {
+  roundOverlayTitle.textContent = message;
+  roundOverlay.classList.add('show');
+}
+
+function hideOverlay() {
+  roundOverlay.classList.remove('show');
 }
 
 // Edible and Unedible
