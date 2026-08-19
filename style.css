@@ -229,7 +229,7 @@ footer { padding: 34px 0 38px; border-top: 1px solid rgba(23,38,55,.25); margin-
 .game-locked { align-items: center; justify-content: center; background: rgba(23,38,55,.05); border-style: dashed; box-shadow: none; }
 .lock-icon { width: 48px; height: 48px; display: grid; place-items: center; color: var(--paper); background: #9aa0a5; border: 2px solid var(--ink); border-radius: 50%; }
 
-.pig-game, .mini-game { width: 100%; margin: 35px auto; padding: 24px; text-align: left; background: #fffdf8; border: 2px solid var(--ink); border-radius: 24px; box-shadow: 7px 7px 0 var(--ink); }
+.pig-game, .mini-game { width: min(760px, 100%); margin: 35px auto; padding: 24px; text-align: left; background: #fffdf8; border: 2px solid var(--ink); border-radius: 24px; box-shadow: 7px 7px 0 var(--ink); }
 .game-toolbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
 .game-close { width: 42px; height: 42px; color: var(--ink); background: transparent; border: 2px solid var(--ink); border-radius: 50%; font-size: 25px; cursor: pointer; }
 .game-arena { position: relative; width: 100%; height: 230px; overflow: hidden; cursor: none; border: 2px solid var(--ink); border-radius: 16px; background: #91bf67; transition: height .4s ease, background .4s ease; }
@@ -254,7 +254,7 @@ footer { padding: 34px 0 38px; border-top: 1px solid rgba(23,38,55,.25); margin-
 .round-overlay.show { opacity: 1; visibility: visible; }
 .round-overlay strong { padding: 12px 20px; text-align: center; font: 800 clamp(32px, 6vw, 64px)/1 "Manrope", sans-serif; letter-spacing: -.05em; }
 .game-status { min-height: 25px; margin: 13px 2px 0 !important; font-size: 14px !important; font-weight: 700; }
-.unlocked-message { margin: 35px auto; padding: 30px; color: var(--ink); background: var(--yellow); border: 2px solid var(--ink); border-radius: 20px; box-shadow: 6px 6px 0 var(--ink); text-align: center; }
+.unlocked-message { width: min(760px, 100%); margin: 35px auto; padding: 30px; color: var(--ink); background: var(--yellow); border: 2px solid var(--ink); border-radius: 20px; box-shadow: 6px 6px 0 var(--ink); text-align: center; }
 .unlocked-message p:last-child { max-width: 780px; margin: 8px auto 0; color: var(--ink); }
 .donkey-stage { position: relative; overflow: hidden; height: 390px; padding: 0; text-align: center; border: 2px solid var(--ink); border-radius: 16px; background: linear-gradient(#b9dca5 0 77%, #83b45f 77%); cursor: none; touch-action: none; }
 .donkey { position: absolute; z-index: 4; left: 50%; top: 76%; width: 88px; height: 88px; display: grid; place-items: center; font-size: 72px; line-height: 1; pointer-events: none; transform: translate(-50%, -50%); transition: transform .12s ease; filter: drop-shadow(3px 5px 0 rgba(23,38,55,.18)); }
