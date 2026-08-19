@@ -11,12 +11,18 @@ function showBorisBanner(overlay, title, message, next) {
 const stockGame = document.querySelector('#stock-game');
 const stockLine = document.querySelector('#stock-line');
 const stockPrice = document.querySelector('#stock-price');
+const profitZone = document.querySelector('#profit-zone');
 const stockStatus = document.querySelector('#stock-status');
 const stockLabel = document.querySelector('#stock-round-label');
 const stockOverlay = document.querySelector('#stock-overlay');
 const stockOverlayTitle = document.querySelector('#stock-overlay-title');
 const stockMessage = document.querySelector('#stock-message');
 const stockSpeeds = [140, 115, 95];
+const stockTargets = [
+  { min: 48, max: 108 },
+  { min: 58, max: 94 },
+  { min: 64, max: 88 }
+];
 let stockRound = 0;
 let stockPoints = [];
 let currentPrice = 100;
@@ -39,6 +45,9 @@ function beginStockRound() {
   currentPrice = 100;
   stockPoints = [{ x: 0, y: 240 }];
   stockLabel.textContent = `Round ${stockRound + 1}`;
+  const target = stockTargets[stockRound];
+  profitZone.style.top = `${target.min / 3}%`;
+  profitZone.style.height = `${(target.max - target.min) / 3}%`;
   stockStatus.textContent = 'Click SELL while the line is inside the green zone.';
   drawStock();
   stockTimer = setInterval(tickStock, stockSpeeds[stockRound]);
@@ -48,7 +57,8 @@ function tickStock() {
   const last = stockPoints.at(-1);
   const nextX = last.x + 12;
   const climb = 10 + stockRound * 2.5;
-  const nextY = last.y <= 30 ? 245 : Math.max(24, last.y - climb + (Math.random() - .5) * 7);
+  const volatility = 7 + stockRound * 8;
+  const nextY = last.y <= 30 ? 245 : Math.max(24, last.y - climb + (Math.random() - .5) * volatility);
   stockPoints.push({ x: nextX, y: nextY });
   if (nextX > 800) stockPoints = stockPoints.map((point) => ({ ...point, x: point.x - 12 })).filter((point) => point.x >= 0);
   currentPrice = 100 + (240 - nextY) / 3;
@@ -65,7 +75,8 @@ function sellStock() {
   stockPlaying = false;
   clearInterval(stockTimer);
   const y = stockPoints.at(-1).y;
-  if (y < 108 && y > 36) {
+  const target = stockTargets[stockRound];
+  if (y <= target.max && y >= target.min) {
     showBorisBanner(stockOverlay, stockOverlayTitle, 'Perfect sell!', advanceStockRound);
   } else {
     showBorisBanner(stockOverlay, stockOverlayTitle, 'Too early — try again!', () => showBorisBanner(stockOverlay, stockOverlayTitle, `Round ${stockRound + 1}`, beginStockRound));
