@@ -8,5 +8,37 @@
 </head>
 <body class="profile-page"><div class="grain" aria-hidden="true"></div>
   <header class="site-header"><a class="monogram" href="index.html">V<span>&</span>B</a><a class="back-link" href="index.html">← Choose someone else</a></header>
-  <main class="profile-main"><article><img class="mini-portrait" src="assets/victor.png" alt="Victor"><h1>Hey <em>Victor!</em></h1><p>I'm so proud of you and to celebrate your discipline and all that you have accomplished I made you this page with positive affirmations and silly memories I remember that you can unlock by playing the games below...</p><a class="back-link" href="index.html">Back to both profiles →</a></article></main>
+  <main class="profile-main victor-main">
+    <article class="victor-intro"><img class="mini-portrait" src="assets/victor.png" alt="Victor"><h1>Hey <em>Victor!</em></h1><p>I'm so proud of you and to celebrate your discipline and all that you have accomplished I made you this page with positive affirmations and silly memories I remember that you can unlock by playing the games below...</p></article>
+
+    <section class="game-grid" aria-label="Victor's games">
+      <article class="game-card catch-card">
+        <div class="game-number">01</div>
+        <div>
+          <p class="role">Three levels</p>
+          <h2>Catch the pig</h2>
+        </div>
+        <button class="game-start" id="start-pig-game" type="button">Play now <span aria-hidden="true">→</span></button>
+      </article>
+      <article class="game-card game-locked" aria-label="Game two locked"><span class="lock-icon" aria-hidden="true">✦</span></article>
+      <article class="game-card game-locked" aria-label="Game three locked"><span class="lock-icon" aria-hidden="true">✦</span></article>
+    </section>
+
+    <section class="pig-game" id="pig-game" hidden aria-labelledby="pig-game-title">
+      <div class="game-toolbar">
+        <div><p class="role" id="level-label">Level 1 · The pen</p><h2 id="pig-game-title">Catch that pig!</h2></div>
+        <button class="game-close" id="close-pig-game" type="button" aria-label="Close game">×</button>
+      </div>
+      <div class="game-arena level-1" id="game-arena">
+        <div class="arena-scenery" aria-hidden="true"></div>
+        <button class="running-pig" id="running-pig" type="button" aria-label="Catch the pig">🐷</button>
+        <div class="player-hand" id="player-hand" aria-hidden="true">☝️</div>
+      </div>
+      <p class="game-status" id="game-status" aria-live="polite">Move your hand and click the pig.</p>
+    </section>
+
+    <section class="unlocked-message" id="victor-message" hidden aria-live="polite"><p class="role">All three levels complete</p><h2>Message unlocked!</h2></section>
+    <a class="back-link" href="index.html">Back to both profiles →</a>
+  </main>
+  <script src="victor-game.js"></script>
 </body></html>
