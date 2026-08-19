@@ -16,7 +16,7 @@ const stockLabel = document.querySelector('#stock-round-label');
 const stockOverlay = document.querySelector('#stock-overlay');
 const stockOverlayTitle = document.querySelector('#stock-overlay-title');
 const stockMessage = document.querySelector('#stock-message');
-const stockSpeeds = [150, 105, 72];
+const stockSpeeds = [140, 115, 95];
 let stockRound = 0;
 let stockPoints = [];
 let currentPrice = 100;
@@ -47,9 +47,8 @@ function beginStockRound() {
 function tickStock() {
   const last = stockPoints.at(-1);
   const nextX = last.x + 12;
-  const wave = Math.sin(nextX / (42 - stockRound * 6)) * (12 + stockRound * 4);
-  const random = (Math.random() - .46) * (30 + stockRound * 8);
-  const nextY = Math.max(34, Math.min(272, last.y + random - wave * .18));
+  const climb = 10 + stockRound * 2.5;
+  const nextY = last.y <= 30 ? 245 : Math.max(24, last.y - climb + (Math.random() - .5) * 7);
   stockPoints.push({ x: nextX, y: nextY });
   if (nextX > 800) stockPoints = stockPoints.map((point) => ({ ...point, x: point.x - 12 })).filter((point) => point.x >= 0);
   currentPrice = 100 + (240 - nextY) / 3;
@@ -190,7 +189,7 @@ const sliderLabel = document.querySelector('#slider-round-label');
 const sliderOverlay = document.querySelector('#slider-overlay');
 const sliderOverlayTitle = document.querySelector('#slider-overlay-title');
 const sliderMessage = document.querySelector('#slider-message');
-const sliderScrambles = [6, 12, 22];
+const sliderScrambles = [3, 5, 8];
 let sliderRound = 0;
 let tiles = [];
 
