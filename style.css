@@ -210,6 +210,38 @@ footer { padding: 34px 0 38px; border-top: 1px solid rgba(23,38,55,.25); margin-
 .profile-main p { color: #5e6872; font-size: 17px; line-height: 1.6; }
 .back-link { display: inline-flex; gap: 8px; align-items: center; color: var(--ink); font-weight: 800; text-underline-offset: 4px; }
 
+.victor-main { display: none; width: min(1180px, calc(100% - 48px)); margin: 0 auto; padding: 50px 0 80px; }
+.profile-unlocked .victor-main { display: block; }
+.victor-intro { max-width: 760px; margin: 0 auto; text-align: center; }
+.game-grid { width: 100%; margin: 65px 0 36px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; text-align: left; }
+.game-card { min-height: 270px; padding: 25px; border: 2px solid var(--ink); border-radius: 22px; box-shadow: 6px 6px 0 var(--ink); display: flex; flex-direction: column; justify-content: space-between; }
+.catch-card { background: var(--blue); }
+.game-number { align-self: flex-start; padding: 7px 10px; border: 1.5px solid var(--ink); border-radius: 100px; font: 800 11px/1 "Manrope", sans-serif; }
+.game-card h2, .pig-game h2, .unlocked-message h2 { margin: 0; font: 800 31px/1 "Manrope", sans-serif; letter-spacing: -.04em; }
+.game-start { width: 100%; padding: 14px 17px; color: var(--paper); background: var(--ink); border: 2px solid var(--ink); border-radius: 12px; font: 800 14px "DM Sans", sans-serif; cursor: pointer; }
+.game-start:hover { color: var(--ink); background: var(--yellow); }
+.game-locked { align-items: center; justify-content: center; background: rgba(23,38,55,.05); border-style: dashed; box-shadow: none; }
+.lock-icon { width: 48px; height: 48px; display: grid; place-items: center; color: var(--paper); background: #9aa0a5; border: 2px solid var(--ink); border-radius: 50%; }
+
+.pig-game { width: 100%; margin: 35px auto; padding: 24px; text-align: left; background: #fffdf8; border: 2px solid var(--ink); border-radius: 24px; box-shadow: 7px 7px 0 var(--ink); }
+.game-toolbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
+.game-close { width: 42px; height: 42px; color: var(--ink); background: transparent; border: 2px solid var(--ink); border-radius: 50%; font-size: 25px; cursor: pointer; }
+.game-arena { position: relative; width: 100%; height: 230px; overflow: hidden; cursor: none; border: 2px solid var(--ink); border-radius: 16px; background: #91bf67; transition: height .4s ease, background .4s ease; }
+.game-arena.level-2 { height: 300px; background: #78b765; }
+.game-arena.level-3 { height: 380px; background: #67a957; }
+.arena-scenery { position: absolute; inset: 0; pointer-events: none; background: repeating-linear-gradient(90deg, transparent 0 76px, rgba(255,255,255,.17) 77px 79px), linear-gradient(0deg, #a67448 0 12px, transparent 12px); }
+.level-1 .arena-scenery { border: 13px solid #9b6842; border-top-width: 5px; }
+.level-2 .arena-scenery { background: radial-gradient(circle at 18% 18%, #f4dc63 0 3px, transparent 4px), radial-gradient(circle at 74% 68%, #f4dc63 0 3px, transparent 4px); background-size: 70px 65px, 90px 80px; }
+.level-3 .arena-scenery { background: linear-gradient(160deg, transparent 65%, rgba(74,130,58,.5) 66%), radial-gradient(ellipse at 80% 15%, #d8eaaa 0 5%, transparent 6%); }
+.running-pig { position: absolute; z-index: 2; left: 50%; top: 50%; width: 62px; height: 62px; padding: 0; display: grid; place-items: center; border: 2px solid var(--ink); border-radius: 50%; background: #f8b2af; font-size: 36px; cursor: none; transform: translate(-50%, -50%); transition: left .55s cubic-bezier(.3,.8,.4,1), top .55s cubic-bezier(.3,.8,.4,1), transform .15s ease; }
+.level-2 .running-pig { transition-duration: .4s, .4s, .15s; }
+.level-3 .running-pig { transition-duration: .27s, .27s, .15s; }
+.running-pig:hover { transform: translate(-50%, -50%) scale(1.12); }
+.player-hand { position: absolute; z-index: 4; left: 50%; top: 70%; font-size: 46px; pointer-events: none; transform: translate(-18%, -10%) rotate(-18deg); filter: drop-shadow(3px 4px 0 rgba(23,38,55,.25)); }
+.game-status { min-height: 25px; margin: 13px 2px 0 !important; font-size: 14px !important; font-weight: 700; }
+.unlocked-message { margin: 35px auto; padding: 30px; color: var(--ink); background: var(--yellow); border: 2px solid var(--ink); border-radius: 20px; box-shadow: 6px 6px 0 var(--ink); text-align: center; }
+.victor-main > .back-link { margin-top: 28px; }
+
 @media (max-width: 760px) {
   .site-header p { display: none; }
   .hero { padding-top: 32px; }
@@ -217,6 +249,8 @@ footer { padding: 34px 0 38px; border-top: 1px solid rgba(23,38,55,.25); margin-
   .profile-card { min-height: 520px; }
   .portrait-wrap { height: 392px; }
   .portrait { max-height: 385px; }
+  .game-grid { grid-template-columns: 1fr; }
+  .game-card { min-height: 210px; }
 }
 
 @media (max-width: 430px) {
@@ -229,6 +263,8 @@ footer { padding: 34px 0 38px; border-top: 1px solid rgba(23,38,55,.25); margin-
   .card-copy { min-height: 124px; padding: 22px; }
   .card-copy h2 { font-size: 42px; }
   .arrow { width: 48px; height: 48px; }
+  .victor-main { width: min(100% - 28px, 1180px); }
+  .game-arena.level-3 { height: 330px; }
   .code-dialog { padding: 34px 22px 26px; }
   .code-row { flex-direction: column; }
 }
